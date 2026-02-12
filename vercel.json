@@ -1,0 +1,28 @@
+{
+    "rewrites": [
+        {
+            "source": "/api/v1/(.*)",
+            "destination": "/api/v1/$1"
+        }
+    ],
+    "builds": [
+        {
+            "src": "backend/app/main.py",
+            "use": "@vercel/python"
+        },
+        {
+            "src": "frontend/package.json",
+            "use": "@vercel/next"
+        }
+    ],
+    "routes": [
+        {
+            "src": "/api/v1/(.*)",
+            "dest": "backend/app/main.py"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "frontend/$1"
+        }
+    ]
+}
