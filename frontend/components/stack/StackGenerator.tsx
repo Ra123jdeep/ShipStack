@@ -55,7 +55,7 @@ export function StackGenerator() {
         setCurrentStack(null) // Reset while loading
 
         try {
-            const response = await fetch("http://localhost:8000/api/v1/stacks/generate", {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/v1/stacks/generate`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ description: query, user_profile: profile }),

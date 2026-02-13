@@ -16,10 +16,18 @@ from app.models import stack, tool  # Import models to register them
 Base.metadata.create_all(bind=engine)
 
 # Set all CORS enabled origins
+# Set all CORS enabled origins
 if settings.BACKEND_CORS_ORIGINS:
+    origins = settings.BACKEND_CORS_ORIGINS
+    # Also allow usage of FRONTEND_URL env var
+    import os
+    frontend_url = os.getenv("FRONTEND_URL")
+    if frontend_url:
+        origins.append(frontend_url)
+    
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=["*"],
+        allow_origins=["*"], # Allow all for now to avoid CORS issues during initial setup
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],

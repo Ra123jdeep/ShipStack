@@ -35,7 +35,7 @@ export default function ToolsPage() {
     useEffect(() => {
         const fetchTools = async () => {
             try {
-                const response = await fetch("http://localhost:8000/api/v1/tools/")
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/v1/tools/`)
                 if (response.ok) {
                     const data = await response.json()
                     setTools(data)

@@ -108,7 +108,7 @@ export function ToolCard({ id, name, description, category, trust_label, trust_s
     const handleTrackClick = async () => {
         try {
             // Basic tracking call - customize URL as needed
-            await fetch('http://localhost:8000/api/v1/analytics/track', {
+            await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/v1/analytics/track`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -13,7 +13,10 @@ class Settings(BaseSettings):
     @property
     def SQL_ALCHEMY_DATABASE_URL(self):
         import os
-        return os.getenv("DATABASE_URL", self.DATABASE_URL)
+        url = os.getenv("DATABASE_URL", self.DATABASE_URL)
+        if url and url.startswith("postgres://"):
+            url = url.replace("postgres://", "postgresql://", 1)
+        return url
 
     # JWT
     SECRET_KEY: str = "SUPER_SECRET_KEY_CHANGE_IN_PRODUCTION" # Use env var in prod

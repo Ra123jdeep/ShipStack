@@ -24,7 +24,7 @@ export function MetricsRow() {
     });
 
     useEffect(() => {
-        fetch('http://localhost:8000/api/v1/analytics/stats')
+        fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/v1/analytics/stats`)
             .then(res => res.json())
             .then(data => setStats(data))
             .catch(err => console.error(err));

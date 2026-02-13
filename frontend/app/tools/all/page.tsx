@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, Suspense } from "react"
 import { Navbar } from "@/components/layout/Navbar"
 import { ToolCard } from "@/components/tools/ToolCard"
 import { ToolsFilter } from "@/components/tools/ToolsFilter"
@@ -18,7 +18,7 @@ interface Tool {
     tags?: string
 }
 
-export default function ToolsArchivePage() {
+function ToolsArchiveContent() {
     const [tools, setTools] = useState<Tool[]>([])
     const [loading, setLoading] = useState(true)
     const [selectedCategory, setSelectedCategory] = useState("All")
@@ -28,7 +28,7 @@ export default function ToolsArchivePage() {
     useEffect(() => {
         const fetchTools = async () => {
             try {
-                const response = await fetch("http://localhost:8000/api/v1/tools/")
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/v1/tools/`)
                 if (response.ok) {
                     const data = await response.json()
                     setTools(data)
@@ -144,5 +144,17 @@ export default function ToolsArchivePage() {
                 </div>
             </div>
         </main>
+    )
+}
+
+export default function ToolsArchivePage() {
+    return (
+        <Suspense fallback={
+            <div className="min-h-screen cosmic-bg flex items-center justify-center">
+                <Loader2 className="h-10 w-10 animate-spin text-primary" />
+            </div>
+        }>
+            <ToolsArchiveContent />
+        </Suspense>
     )
 }

@@ -21,7 +21,7 @@ export function ActivityFeed() {
         // Initial fetch
         const fetchEvents = async () => {
             try {
-                const res = await fetch('http://localhost:8000/api/v1/analytics/stats');
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/v1/analytics/stats`);
                 const data = await res.json();
                 if (data.recent_events) {
                     setEvents(data.recent_events.map((e: any) => ({

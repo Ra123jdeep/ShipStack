@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, Suspense } from "react"
 import { useAuth } from "@/context/AuthContext"
 import { useSearchParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
@@ -9,7 +9,7 @@ import { Card } from "@/components/ui/card"
 import { ShieldCheck, Loader2 } from "lucide-react"
 import { motion } from "framer-motion"
 
-export default function VerifyPage() {
+function VerifyContent() {
     const [code, setCode] = useState("")
     const [isSubmitting, setIsSubmitting] = useState(false)
     const { verifyOTP } = useAuth()
@@ -88,5 +88,13 @@ export default function VerifyPage() {
                 </Card>
             </motion.div>
         </div>
+    )
+}
+
+export default function VerifyPage() {
+    return (
+        <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-white">Loading...</div>}>
+            <VerifyContent />
+        </Suspense>
     )
 }
